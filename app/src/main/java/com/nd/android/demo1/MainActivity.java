@@ -31,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new ImageDiaologFragment().show(getFragmentManager(),"custom");
                 findViewById(R.id.ll_title).getBackground().setAlpha(127);//设置背景半透明
-                Toast toast=Toast.makeText(MainActivity.this,"点击事件",Toast.LENGTH_LONG);
-                toast.show();
+//                Toast toast=Toast.makeText(MainActivity.this,"点击事件",Toast.LENGTH_LONG);
+//                toast.show();
             }
         });
     }
