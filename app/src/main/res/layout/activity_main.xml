@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_all"
-    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="com.nd.android.demo1.MainActivity">
 
     <TextView
@@ -37,55 +37,60 @@
         app:layout_constraintVertical_bias="0.961" />
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="172dp"
+        android:id="@+id/layout_image"
+        android:layout_width="400dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/casting_placeholder"
         android:orientation="vertical"
-        android:id="@+id/layout_image"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="0.13" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
             <!--<ListView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:fadingEdge="none"-->
-                <!--android:id="@+id/lv_image">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:fadingEdge="none"-->
+            <!--android:id="@+id/lv_image">-->
             <!--</ListView>-->
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="0.2"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_width="match_parent">
+            android:layout_weight="0.13">
 
             <Button
                 android:id="@+id/btn_close"
                 android:layout_width="17dp"
                 android:layout_height="16dp"
-                android:layout_marginLeft="270dp"
+                android:layout_marginLeft="365dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/close" />
 
         </LinearLayout>
 
 
     </LinearLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>

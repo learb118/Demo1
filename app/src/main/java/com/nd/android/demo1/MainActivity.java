@@ -133,5 +133,7 @@ public class MainActivity extends AppCompatActivity {
         ImageList.add(strawberry);
         Image watermelon=new Image(R.drawable.watermelon_pic);
         ImageList.add(watermelon);
+        ImageList.add(watermelon);
+        ImageList.add(watermelon);
     }
 }
