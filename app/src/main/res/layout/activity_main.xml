@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_title"
-    android:background="@drawable/ic_launcher_background"
+    android:id="@+id/layout_all"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nd.android.demo1.MainActivity">
@@ -12,27 +12,70 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:text="ActiveCast"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_activecase"
+        tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_activecase"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="横竖屏切换"
+        android:background="@drawable/expand_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.961" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="172dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/casting_placeholder"
+        android:orientation="vertical"
+        android:id="@+id/layout_image"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.2"
+            android:layout_height="0dp"
+            android:layout_width="match_parent">
+
+            <Button
+                android:id="@+id/btn_close"
+                android:layout_width="17dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="270dp"
+                android:background="@drawable/close" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

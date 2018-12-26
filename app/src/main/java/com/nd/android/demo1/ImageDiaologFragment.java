@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -49,11 +50,31 @@ public class ImageDiaologFragment extends DialogFragment  {
 //                break;
 //        }
 //    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//设置背景透明
-        return inflater.inflate(R.layout.imagedialog, container, false);
+        View view =inflater.inflate( R.layout.imagedialog, container, false);
+//        private Button btn1;
+//        btn1=(Button)findViewById(R.id.button1);
+        return view;
     }
+
+//    @Override
+//    public Dialog onCreateDialog(Bundle savedInstanceState) {
+//        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+//        LayoutInflater inflater=getActivity().getLayoutInflater();
+//        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//设置背景透明
+//        View view=inflater.inflate(R.layout.imagedialog,null);
+//        builder.setView(view).setPositiveButton("image",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                }).setNegativeButton("Cancel",null);
+//        return builder.create();
+//    }
 }
