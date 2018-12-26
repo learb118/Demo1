@@ -6,13 +6,20 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -20,10 +27,16 @@ import com.timmy.tdialog.TDialog;
 import com.timmy.tdialog.base.BindViewHolder;
 import com.timmy.tdialog.listener.OnBindViewListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_activecase,btn_close;
     private LinearLayout layout;
+    private RecyclerView rv_image;
+    private ListView lv_image;
+    private List<Image> ImageList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +45,18 @@ public class MainActivity extends AppCompatActivity {
         }
         //requestWindowFeature(Window.FEATURE_NO_TITLE);//无title
         getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,WindowManager.LayoutParams. FLAG_FULLSCREEN);//全屏显示
-        findViewById(R.id.layout_all).getBackground().setAlpha(150);//设置背景半透明
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//设置屏幕横屏
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置屏幕竖屏
+        findViewById(R.id.layout_all).getBackground().setAlpha(200);//设置背景透明度
 
         btn_activecase=findViewById(R.id.btn_activecase);
         btn_close=findViewById(R.id.btn_close);
-
         layout=findViewById(R.id.layout_image);
+
         btn_activecase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,5 +95,32 @@ public class MainActivity extends AppCompatActivity {
                 btn_activecase.setEnabled(true);
             }
         });
+
+//        rv_image=findViewById(R.id.rv_image);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this );//设置布局管理器
+//        rv_image.setLayoutManager(layoutManager);//设置布局管理器
+//        layoutManager.setOrientation(OrientationHelper. VERTICAL);//设置为垂直布局，这也是默认的
+//        rv_image.setAdapter(recycleAdapter);//设置Adapter
+//        rv_image.addItemDecoration( new DividerGridItemDecoration(this ));//设置分隔线
+//        rv_image.setItemAnimator( new DefaultItemAnimator());//设置增加或删除条目的动画
+
+
+        lv_image=findViewById(R.id.lv_image);
+        initFruits(); // 初始化图片数据
+        ImageAdapter adapter = new ImageAdapter(MainActivity.this, R.layout.item_image, ImageList);
+        ListView listView = findViewById(R.id.lv_image);
+        listView.setAdapter(adapter);
+    }
+    private void initFruits(){
+        Image apple=new Image(R.drawable.apple_pic);
+        ImageList.add(apple);
+        Image banana=new Image(R.drawable.banana_pic);
+        ImageList.add(banana);
+        Image cherry=new Image(R.drawable.cherry_pic);
+        ImageList.add(cherry);
+        Image grape=new Image(R.drawable.grape_pic);
+        ImageList.add(grape);
+        Image mango=new Image(R.drawable.mango_pic);
+        ImageList.add(mango);
     }
 }
