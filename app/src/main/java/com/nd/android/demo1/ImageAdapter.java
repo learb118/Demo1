@@ -3,11 +3,13 @@ package com.nd.android.demo1;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,20 +17,54 @@ import java.util.List;
  * Created by Administrator on 2018/12/26.
  */
 
-public class ImageAdapter extends ArrayAdapter {
-    private final int resourceId;
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
+    private List<Image> mImageList;
 
-    public ImageAdapter(Context context, int textViewResourceId, List<Image> objects) {
-        super(context, textViewResourceId, objects);
-        resourceId = textViewResourceId;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        View imageview;
+        ImageView myview;
+        public ViewHolder(View view){
+            super(view);
+            imageview=view;
+            myview=view.findViewById(R.id.my_image);
+        }
     }
-    @NonNull
+
+    public ImageAdapter(List<Image> imageList){
+        mImageList=imageList;
+    }
+
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Image image=(Image)getItem(position);//获取当前的Image实例
-        View view= LayoutInflater.from(getContext()).inflate(resourceId,null);//实例化一个对象
-        ImageView myimage=view.findViewById(R.id.my_image);//获取布局内的图片视图
-        myimage.setImageResource(image.getImageId());//为图片视图设置资源
-        return view;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Image fruit = mImageList.get(position);
+                Toast.makeText(v.getContext(), "you clicked view " , Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.myview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Image fruit = mImageList.get(position);
+                Toast.makeText(v.getContext(), "you clicked image " , Toast.LENGTH_SHORT).show();
+            }
+        });
+        return holder;
     }
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Image image = mImageList.get(position);
+        holder.myview.setImageResource(image.getImageId());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mImageList.size();
+    }
+
 }

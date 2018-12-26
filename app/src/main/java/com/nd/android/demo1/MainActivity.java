@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
@@ -96,22 +97,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        rv_image=findViewById(R.id.rv_image);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this );//设置布局管理器
-//        rv_image.setLayoutManager(layoutManager);//设置布局管理器
-//        layoutManager.setOrientation(OrientationHelper. VERTICAL);//设置为垂直布局，这也是默认的
-//        rv_image.setAdapter(recycleAdapter);//设置Adapter
-//        rv_image.addItemDecoration( new DividerGridItemDecoration(this ));//设置分隔线
-//        rv_image.setItemAnimator( new DefaultItemAnimator());//设置增加或删除条目的动画
+
+        initImage(); // 初始化图片数据
+        rv_image=findViewById(R.id.rv_image);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        rv_image.setLayoutManager(layoutManager);//设置布局管理器
+        ImageAdapter adapter = new ImageAdapter(ImageList);
+        rv_image.setAdapter(adapter);//设置Adapter
 
 
-        lv_image=findViewById(R.id.lv_image);
-        initFruits(); // 初始化图片数据
-        ImageAdapter adapter = new ImageAdapter(MainActivity.this, R.layout.item_image, ImageList);
-        ListView listView = findViewById(R.id.lv_image);
-        listView.setAdapter(adapter);
+//        lv_image=findViewById(R.id.lv_image);
+//        initImage(); // 初始化图片数据
+//        ImageAdapter adapter = new ImageAdapter(MainActivity.this, R.layout.item_image, ImageList);
+//        ListView listView = findViewById(R.id.lv_image);
+//        listView.setAdapter(adapter);
     }
-    private void initFruits(){
+    private void initImage(){
         Image apple=new Image(R.drawable.apple_pic);
         ImageList.add(apple);
         Image banana=new Image(R.drawable.banana_pic);
@@ -122,5 +123,15 @@ public class MainActivity extends AppCompatActivity {
         ImageList.add(grape);
         Image mango=new Image(R.drawable.mango_pic);
         ImageList.add(mango);
+        Image orange=new Image(R.drawable.orange_pic);
+        ImageList.add(orange);
+        Image pear=new Image(R.drawable.pear_pic);
+        ImageList.add(pear);
+        Image pineapple=new Image(R.drawable.pineapple_pic);
+        ImageList.add(pineapple);
+        Image strawberry=new Image(R.drawable.strawberry_pic);
+        ImageList.add(strawberry);
+        Image watermelon=new Image(R.drawable.watermelon_pic);
+        ImageList.add(watermelon);
     }
 }
