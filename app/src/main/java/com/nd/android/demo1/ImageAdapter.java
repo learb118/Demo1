@@ -63,12 +63,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Image image = new Image(R.drawable.casting_placeholder);
-        Image fruit =mImageList.get(position);
-        if(holder.myview.getImageAlpha()==fruit.getImageId()){
-            holder.myview.setImageResource(fruit.getImageId());
-        }
+        //holder.myview.setImageResource(image.getImageId());
         Log.w("ImageAdapter","onBindViewHolder"+position);
-        holder.myview.setImageResource(image.getImageId());
     }
 
     @Override
