@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.w("ImageAdapter","onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.imageview.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         if(holder.myview.getImageAlpha()==fruit.getImageId()){
             holder.myview.setImageResource(fruit.getImageId());
         }
+        Log.w("ImageAdapter","onBindViewHolder"+position);
         holder.myview.setImageResource(image.getImageId());
     }
 
