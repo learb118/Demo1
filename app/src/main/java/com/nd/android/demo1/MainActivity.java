@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         btn_close=findViewById(R.id.btn_close);
         layout=findViewById(R.id.layout_image);
 
+
+
         btn_activecase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

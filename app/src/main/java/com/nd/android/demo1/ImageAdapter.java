@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,29 +37,37 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.w("ImageAdapter","onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                Image fruit = mImageList.get(position);
-                Toast.makeText(v.getContext(), "you clicked view " , Toast.LENGTH_SHORT).show();
+                Image image = mImageList.get(position);
+
+                Toast.makeText(v.getContext(), "you clicked view, position : " + position , Toast.LENGTH_SHORT).show();
             }
         });
         holder.myview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                Image fruit = mImageList.get(position);
-                Toast.makeText(v.getContext(), "you clicked image " , Toast.LENGTH_SHORT).show();
+                Image image = mImageList.get(position);
+                holder.myview.setImageResource(image.getImageId());
+                //Toast.makeText(v.getContext(), "you clicked image, position : " +  position, Toast.LENGTH_SHORT).show();
             }
         });
         return holder;
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Image image = mImageList.get(position);
+        Image image = new Image(R.drawable.casting_placeholder);
+        Image fruit =mImageList.get(position);
+        if(holder.myview.getImageAlpha()==fruit.getImageId()){
+            holder.myview.setImageResource(fruit.getImageId());
+        }
+        Log.w("ImageAdapter","onBindViewHolder"+position);
         holder.myview.setImageResource(image.getImageId());
     }
 
