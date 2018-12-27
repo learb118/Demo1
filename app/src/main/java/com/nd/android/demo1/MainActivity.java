@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//设置屏幕横屏
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置屏幕竖屏
-        findViewById(R.id.layout_all).getBackground().setAlpha(200);//设置背景透明度
+        findViewById(R.id.layout_all).getBackground().setAlpha(180);//设置背景透明度
 
         btn_activecase=findViewById(R.id.btn_activecase);
         btn_close=findViewById(R.id.btn_close);
@@ -107,13 +107,14 @@ public class MainActivity extends AppCompatActivity {
         ImageAdapter adapter = new ImageAdapter(ImageList);
         rv_image.setAdapter(adapter);//设置Adapter
 
-
 //        lv_image=findViewById(R.id.lv_image);
 //        initImage(); // 初始化图片数据
 //        ImageAdapter adapter = new ImageAdapter(MainActivity.this, R.layout.item_image, ImageList);
 //        ListView listView = findViewById(R.id.lv_image);
 //        listView.setAdapter(adapter);
     }
+
+
     private void initImage(){
         Image apple=new Image(R.drawable.apple_pic);
         ImageList.add(apple);
