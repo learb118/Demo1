@@ -106,8 +106,18 @@ public class MainActivity extends AppCompatActivity {
         rv_image=findViewById(R.id.rv_image);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         rv_image.setLayoutManager(layoutManager);//设置布局管理器
-        ImageAdapter adapter = new ImageAdapter(ImageList, callback);
+        ImageAdapter adapter = new ImageAdapter(ImageList);
         rv_image.setAdapter(adapter);//设置Adapter
+        adapter.setCallback(new ImageAdapter.ClickImageCallback() {
+            @Override
+            public void onClickImage(View v, Image image) {
+                Intent intent=new Intent(v.getContext(), EnlargeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("ImageId", image.getImageId());
+                intent.putExtras(bundle);//设置参数
+                v.getContext().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), v, "sharedView").toBundle());
+            }
+        });
 
 //        lv_image=findViewById(R.id.lv_image);
 //        initImage(); // 初始化图片数据
@@ -119,11 +129,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter.ClickImageCallback callback = new ImageAdapter.ClickImageCallback() {
         @Override
         public void onClickImage(View v, Image image) {
-            Intent intent=new Intent(v.getContext(), EnlargeActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt("ImageId", image.getImageId());
-            intent.putExtras(bundle);//设置参数
-            v.getContext().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), v, "sharedView").toBundle());
+
         }
     };
 

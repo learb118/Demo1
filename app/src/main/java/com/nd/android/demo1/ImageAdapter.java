@@ -23,7 +23,7 @@ import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAn
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     private List<Image> mImageList;
 
-    private ClickImageCallback callback;
+    private ClickImageCallback clickimagecallback;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View imageview;
@@ -39,9 +39,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    public ImageAdapter(List<Image> imageList, ClickImageCallback callback){
+    public ImageAdapter(List<Image> imageList){
         mImageList=imageList;
-        this.callback = callback;
     }
 
     @Override
@@ -66,8 +65,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 if(!holder.isClick){
                     holder.myview.setImageResource(image.getImageId());
                 }else {
-                    if (callback != null) {
-                        callback.onClickImage(v, image);
+                    if (clickimagecallback != null) {
+                        clickimagecallback.onClickImage(v, image);
                     }
                 }
                 //Toast.makeText(v.getContext(), "you clicked image, position : " +  position+second_click_position[position], Toast.LENGTH_SHORT).show();
@@ -88,5 +87,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public interface ClickImageCallback {
         void onClickImage(View v, Image image);
+    }
+
+    public void setCallback(ClickImageCallback clickimagecallback) {
+        this.clickimagecallback = clickimagecallback;
     }
 }
