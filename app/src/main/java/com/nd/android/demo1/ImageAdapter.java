@@ -22,20 +22,26 @@ import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAn
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     private List<Image> mImageList;
-    private boolean second_click_position []= new boolean[12];
+
+    private ClickImageCallback callback;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View imageview;
         ImageView myview;
+        boolean isClick;
+
         public ViewHolder(View view){
             super(view);
             imageview=view;
             myview=view.findViewById(R.id.my_image);
+            Image image = new Image(R.drawable.casting_placeholder);
+            myview.setImageResource(image.getImageId());
         }
     }
 
-    public ImageAdapter(List<Image> imageList){
+    public ImageAdapter(List<Image> imageList, ClickImageCallback callback){
         mImageList=imageList;
+        this.callback = callback;
     }
 
     @Override
@@ -57,25 +63,21 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Image image = mImageList.get(position);
-                if(second_click_position[position]==false){
+                if(!holder.isClick){
                     holder.myview.setImageResource(image.getImageId());
                 }else {
-                    Intent intent=new Intent(v.getContext(), EnlargeActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("ImageId", image.getImageId());
-                    intent.putExtras(bundle);//设置参数
-                    v.getContext().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), v, "sharedView").toBundle());
+                    if (callback != null) {
+                        callback.onClickImage(v, image);
+                    }
                 }
                 //Toast.makeText(v.getContext(), "you clicked image, position : " +  position+second_click_position[position], Toast.LENGTH_SHORT).show();
-                second_click_position[position]=true;
+                holder.isClick = true;
             }
         });
         return holder;
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Image image = new Image(R.drawable.casting_placeholder);
-        //holder.myview.setImageResource(image.getImageId());
         Log.w("ImageAdapter","onBindViewHolder"+position);
     }
 
@@ -84,4 +86,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return mImageList.size();
     }
 
+    public interface ClickImageCallback {
+        void onClickImage(View v, Image image);
+    }
 }

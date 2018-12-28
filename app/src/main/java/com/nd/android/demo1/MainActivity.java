@@ -2,6 +2,8 @@ package com.nd.android.demo1;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv_image;
     private List<Image> ImageList=new ArrayList<>();
 
+    private AppCompatActivity context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getSupportActionBar() != null){//隐藏标题栏
@@ -57,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
         btn_activecase=findViewById(R.id.btn_activecase);
         btn_close=findViewById(R.id.btn_close);
         layout=findViewById(R.id.layout_image);
-
-
 
         btn_activecase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         rv_image=findViewById(R.id.rv_image);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         rv_image.setLayoutManager(layoutManager);//设置布局管理器
-        ImageAdapter adapter = new ImageAdapter(ImageList);
+        ImageAdapter adapter = new ImageAdapter(ImageList, callback);
         rv_image.setAdapter(adapter);//设置Adapter
 
 //        lv_image=findViewById(R.id.lv_image);
@@ -114,6 +116,16 @@ public class MainActivity extends AppCompatActivity {
 //        listView.setAdapter(adapter);
     }
 
+    private ImageAdapter.ClickImageCallback callback = new ImageAdapter.ClickImageCallback() {
+        @Override
+        public void onClickImage(View v, Image image) {
+            Intent intent=new Intent(v.getContext(), EnlargeActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ImageId", image.getImageId());
+            intent.putExtras(bundle);//设置参数
+            v.getContext().startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), v, "sharedView").toBundle());
+        }
+    };
 
     private void initImage(){
         Image apple=new Image(R.drawable.apple_pic);
