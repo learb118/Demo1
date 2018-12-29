@@ -1,45 +1,31 @@
 package com.nd.android.demo1;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.drm.DrmStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.Layout;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.timmy.tdialog.TDialog;
-import com.timmy.tdialog.base.BindViewHolder;
-import com.timmy.tdialog.listener.OnBindViewListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_activecase,btn_close;
-    private LinearLayout layout;
+    private ConstraintLayout layout;
     private RecyclerView rv_image;
     private ListView lv_image;
     private List<Image> ImageList=new ArrayList<>();
+    private ImageAdapter adapter;
 
     private AppCompatActivity context;
 
@@ -60,13 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
         btn_activecase=findViewById(R.id.btn_activecase);
         btn_close=findViewById(R.id.btn_close);
-        layout=findViewById(R.id.layout_image);
+        layout=findViewById(R.id.constraintLayout);
 
         btn_activecase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 layout.setVisibility(View.VISIBLE);
                 btn_activecase.setEnabled(false);
+
 
 //                new ImageDiaologFragment().show(getFragmentManager(),"custom");//dialogFragment方式的弹窗
 
@@ -96,8 +83,13 @@ public class MainActivity extends AppCompatActivity {
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layout.setVisibility(View.GONE);
-                btn_activecase.setEnabled(true);
+                adapter.notifyItemRangeRemoved(0,12);
+                adapter.notifyDataSetChanged();//全部刷新
+                adapter.notifyDataSetChanged();//全部刷新
+                adapter.notifyDataSetChanged();//全部刷新
+                adapter.notifyDataSetChanged();//全部刷新
+//                layout.setVisibility(View.GONE);
+//                btn_activecase.setEnabled(true);
             }
         });
 
@@ -106,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         rv_image=findViewById(R.id.rv_image);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         rv_image.setLayoutManager(layoutManager);//设置布局管理器
-        ImageAdapter adapter = new ImageAdapter(ImageList);
+        adapter = new ImageAdapter(ImageList);
         rv_image.setAdapter(adapter);//设置Adapter
         adapter.setCallback(new ImageAdapter.ClickImageCallback() {
             @Override
