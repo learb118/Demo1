@@ -25,8 +25,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             super(view);
             //my_view=view;
             my_imageview=view.findViewById(R.id.my_image);
-//            Image image = new Image(R.drawable.casting_placeholder);
-//            my_imageview.setImageResource(image.getImageId());
+            Image image = new Image(R.drawable.casting_placeholder);
+            my_imageview.setImageResource(image.getImageId());
         }
     }
 
@@ -71,20 +71,17 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         //用于加载布局，会在每个子项滚动到屏幕时执行
         Log.w("ImageAdapter","onBindViewHolder"+position);
-        Image image = new Image(R.drawable.casting_placeholder);
-        holder.my_imageview.setImageResource(image.getImageId());
-        holder.isClick=false;
     }
     @Override
     public int getItemCount() {
         return mImageList.size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        //设置item唯一id
-        return  mImageList.get(position).getImageId();
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        //设置item唯一id
+//        return  mImageList.get(position).getImageId();
+//    }
 
     public interface ClickImageCallback {
         void onClickImage(View v, Image image);
