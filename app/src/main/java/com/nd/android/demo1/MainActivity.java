@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Image> ImageList=new ArrayList<>();
     private ImageAdapter adapter;
 
-    private AppCompatActivity context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getSupportActionBar() != null){//隐藏标题栏
@@ -83,22 +81,21 @@ public class MainActivity extends AppCompatActivity {
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.notifyItemRangeRemoved(0,12);
-                adapter.notifyDataSetChanged();//全部刷新
-                adapter.notifyDataSetChanged();//全部刷新
-                adapter.notifyDataSetChanged();//全部刷新
-                adapter.notifyDataSetChanged();//全部刷新
-//                layout.setVisibility(View.GONE);
-//                btn_activecase.setEnabled(true);
+                adapter.notifyItemRangeRemoved(0,12);//全部刷新
+//                adapter.notifyDataSetChanged();//刷新可见item
+                layout.setVisibility(View.GONE);
+                btn_activecase.setEnabled(true);
             }
         });
 
 
         initImage(); // 初始化图片数据
         rv_image=findViewById(R.id.rv_image);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        rv_image.setItemViewCacheSize(12);//设置viewholder最大缓存数
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);//用于指定布局方式
         rv_image.setLayoutManager(layoutManager);//设置布局管理器
         adapter = new ImageAdapter(ImageList);
+        adapter.setHasStableIds(true);
         rv_image.setAdapter(adapter);//设置Adapter
         adapter.setCallback(new ImageAdapter.ClickImageCallback() {
             @Override

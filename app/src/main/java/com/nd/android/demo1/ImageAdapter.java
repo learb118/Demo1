@@ -15,20 +15,18 @@ import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     private List<Image> mImageList;
-
-    private ClickImageCallback clickimagecallback;
-
+    private ClickImageCallback clickimagecallback;//回调函数
     static class ViewHolder extends RecyclerView.ViewHolder{
-        View imageview;
-        ImageView myview;
+        //View my_view;
+        ImageView my_imageview;
         boolean isClick;
 
         public ViewHolder(View view){
             super(view);
-            imageview=view;
-            myview=view.findViewById(R.id.my_image);
-            Image image = new Image(R.drawable.casting_placeholder);
-            myview.setImageResource(image.getImageId());
+            //my_view=view;
+            my_imageview=view.findViewById(R.id.my_image);
+//            Image image = new Image(R.drawable.casting_placeholder);
+//            my_imageview.setImageResource(image.getImageId());
         }
     }
 
@@ -38,10 +36,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //用于创建ViewHolder实例（在这里加载子项布局）
         Log.w("ImageAdapter","onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-//        holder.imageview.setOnClickListener(new View.OnClickListener() {
+//        holder.my_view.setOnClickListener(new View.OnClickListener() {//item点击事件
 //            @Override
 //            public void onClick(View v) {
 //                int position = holder.getAdapterPosition();
@@ -50,13 +49,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 //                //Toast.makeText(v.getContext(), "you clicked view, position : " + position , Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        holder.myview.setOnClickListener(new View.OnClickListener() {
+        holder.my_imageview.setOnClickListener(new View.OnClickListener() {//item里的图片的点击事件
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Image image = mImageList.get(position);
                 if(!holder.isClick){
-                    holder.myview.setImageResource(image.getImageId());
+                    holder.my_imageview.setImageResource(image.getImageId());
                 }else {
                     if (clickimagecallback != null) {
                         clickimagecallback.onClickImage(v, image);
@@ -70,12 +69,21 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        //用于加载布局，会在每个子项滚动到屏幕时执行
         Log.w("ImageAdapter","onBindViewHolder"+position);
+        Image image = new Image(R.drawable.casting_placeholder);
+        holder.my_imageview.setImageResource(image.getImageId());
+        holder.isClick=false;
     }
-
     @Override
     public int getItemCount() {
         return mImageList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        //设置item唯一id
+        return  mImageList.get(position).getImageId();
     }
 
     public interface ClickImageCallback {
