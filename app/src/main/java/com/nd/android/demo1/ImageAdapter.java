@@ -23,7 +23,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         public ViewHolder(View view){
             super(view);
-            //my_view=view;
             my_imageview=view.findViewById(R.id.my_image);
             Image image = new Image(R.drawable.casting_placeholder);
             my_imageview.setImageResource(image.getImageId());
@@ -40,15 +39,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         Log.w("ImageAdapter","onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-//        holder.my_view.setOnClickListener(new View.OnClickListener() {//item点击事件
-//            @Override
-//            public void onClick(View v) {
-//                int position = holder.getAdapterPosition();
-//                Image image = mImageList.get(position);
-//                holder.myview.setImageResource(image.getImageId());
-//                //Toast.makeText(v.getContext(), "you clicked view, position : " + position , Toast.LENGTH_SHORT).show();
-//            }
-//        });
         holder.my_imageview.setOnClickListener(new View.OnClickListener() {//item里的图片的点击事件
             @Override
             public void onClick(View v) {
@@ -76,12 +66,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public int getItemCount() {
         return mImageList.size();
     }
-
-//    @Override
-//    public long getItemId(int position) {
-//        //设置item唯一id
-//        return  mImageList.get(position).getImageId();
-//    }
 
     public interface ClickImageCallback {
         void onClickImage(View v, Image image);
