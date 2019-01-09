@@ -21,22 +21,23 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout layout;
     private RecyclerView rv_image;
     private List<Image> ImageList=new ArrayList<>();
+
+    public ImageAdapter getAdapter() {
+        return adapter;
+    }
+
     private ImageAdapter adapter;
-    private Dialog dialog;
+    Dialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (getSupportActionBar() != null){//隐藏标题栏
-            getSupportActionBar().hide();
-        }
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);//无title
+        getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,WindowManager.LayoutParams. FLAG_FULLSCREEN);//全屏显示
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//设置屏幕横屏
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置屏幕竖屏
         findViewById(R.id.layout_all).getBackground().setAlpha(180);//设置背景透明度
 
         btn_activecase=findViewById(R.id.btn_activecase);
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layout.setVisibility(View.GONE);
+                layout.setVisibility(View.INVISIBLE);
                 btn_activecase.setEnabled(true);
             }
         });
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         initAdapter();
     }
 
-    private void initAdapter() {
+     void initAdapter() {
         rv_image=findViewById(R.id.rv_image);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);//用于指定布局方式
         rv_image.setLayoutManager(layoutManager);//设置布局管理器
@@ -75,26 +76,30 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter.ClickImageCallback callback = new ImageAdapter.ClickImageCallback() {
         @Override
         public void onClickImage(View v, Image image) {
-            dialog = new Dialog(MainActivity.this, R.style.Dialog);
-            dialog.setContentView(R.layout.activity_enlarge);
-            ImageView imageView=dialog.findViewById(R.id.imageView2);
-            imageView.setImageResource(image.getImageId());
-            dialog.setCanceledOnTouchOutside(true); // Sets whether this dialog is
-            dialog.show();
-            Window w = dialog.getWindow();
-            WindowManager.LayoutParams lp = w.getAttributes();
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setAttributes(lp);
-            imageView.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
+            dialogShow(image);
         }
     };
+
+    void dialogShow(Image image) {
+        dialog = new Dialog(MainActivity.this, R.style.Dialog);
+        dialog.setContentView(R.layout.activity_enlarge);
+        ImageView imageView=dialog.findViewById(R.id.imageView2);
+        imageView.setImageResource(image.getImageId());
+        dialog.setCanceledOnTouchOutside(true); // Sets whether this dialog is
+        dialog.show();
+        Window w = dialog.getWindow();
+        WindowManager.LayoutParams lp = w.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(lp);
+        imageView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+    }
 
     private void initImage(){
         Image apple=new Image(R.drawable.apple_pic);
