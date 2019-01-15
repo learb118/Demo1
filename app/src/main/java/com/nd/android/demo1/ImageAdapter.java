@@ -1,6 +1,7 @@
 package com.nd.android.demo1;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         //用于创建ViewHolder实例（在这里加载子项布局）
         Log.w("ImageAdapter","onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
+
+        DisplayMetrics metrics = parent.getContext().getResources().getDisplayMetrics();
+        int heightPixels = metrics.heightPixels;
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height=heightPixels/5;
+
         final ViewHolder holder = new ViewHolder(view);
         holder.my_imageview.setOnClickListener(new View.OnClickListener() {//item里的图片的点击事件
             @Override
